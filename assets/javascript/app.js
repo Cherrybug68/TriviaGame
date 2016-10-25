@@ -1,6 +1,8 @@
 "use strict";
 
 // pos = position variable...what question they are on
+var counter = null;
+
 var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
 var start = false;
 
@@ -18,24 +20,30 @@ var questions = [
 	["Where was the iconic 1970 I'd Like to Teach the World to Sing commercial filmed?", "Madera, California", "Inverness, Scottland", "London, England", "Rome, Italy", "B"],
 ];
 
-
+	var count = 10;
 
 // Timer Function
-var count = 10;
-var counter = setInterval(timer, 1000);
+function renderTimer (){
 
-function timer (){
-	count = count -1;
-	if (count < 0) {
-		clearInterval(counter);
-		return;
-	}
-	document.getElementById("timer").innerHTML=count + " secs";
+	counter = setInterval(timer, 1000);
+
+
 }
 
+	function timer (){
+		count -= 1;
+		if (count < 1) {
+			clearInterval(counter);
+			count = 10;
+			checkAnswer();
+			return false;
+		}
+		document.getElementById("timer").innerHTML=count + " secs";
+	}
 
 // Writes the questions and multiple choice answers to the screen
 function renderQuestion() {
+	renderTimer();
 
 	test = document.getElementById("test");
 
@@ -69,6 +77,7 @@ function renderQuestion() {
 	test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
 
 	if (timer == 0) {
+		console.log(timer);
 		test.getElembenById('button').click();
 	}
 }
@@ -76,6 +85,9 @@ function renderQuestion() {
 
 // function to check the answer
 function checkAnswer(){
+
+	clearInterval(counter);
+
 	// captures the choice (what user selects) selected from the choices (the array of the possible answers)
 	choices = document.getElementsByName("choices");
 	for (var i=0; i<choices.length; i++){
@@ -101,6 +113,6 @@ function checkAnswer(){
 }
 
 // // runs the function "renderQuestion" after page loads
-window.addEventListener("load", renderQuestion, timer);
+window.addEventListener("load", renderQuestion);
 
 
