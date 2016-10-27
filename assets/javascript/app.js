@@ -20,15 +20,12 @@ var questions = [
 	["Where was the iconic 1970 I'd Like to Teach the World to Sing commercial filmed?", "Madera, California", "Inverness, Scottland", "London, England", "Rome, Italy", "B"],
 ];
 
-	var count = 10;
+var count = 15;
 
 // Timer Function
 function renderTimer (){
-
 	counter = setInterval(timer, 1000);
-
-
-}
+	}
 
 	function timer (){
 		count -= 1;
@@ -46,13 +43,6 @@ function renderQuestion() {
 	renderTimer();
 
 	test = document.getElementById("test");
-
-	if (pos >= questions.length){
-		test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
-		document.getElementById("test_status").innerHTML = "Test Completed";
-		pos = 0;
-		correct = 0;
-	}
 
 	// displays text at top of page saying "Question x of y"...x = the question number and y being the total number of questions you have in your array.
 	document.getElementById("test_status").innerHTML = "Question " + (pos+1)+" of "+questions.length;
@@ -77,7 +67,6 @@ function renderQuestion() {
 	test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
 
 	if (timer == 0) {
-		console.log(timer);
 		test.getElembenById('button').click();
 	}
 }
@@ -87,29 +76,44 @@ function renderQuestion() {
 function checkAnswer(){
 
 	clearInterval(counter);
-
-	// captures the choice (what user selects) selected from the choices (the array of the possible answers)
-	choices = document.getElementsByName("choices");
-	for (var i=0; i<choices.length; i++){
-		if(choices[i].checked){
-		choice = choices[i].value;
+	
+	setTimeout(function(){
+		// captures the choice (what user selects) selected from the choices (the array of the possible answers)
+		choices = document.getElementsByName("choices");
+		for (var i=0; i<choices.length; i++){
+			if(choices[i].checked){
+			choice = choices[i].value;
+			}
 		}
-	}
 
-	// checks to see if choice (what user selected) matches the answer (last item in the questions array)
-	if (choice == questions[pos][5]) {
-		// adds one to the correct answer tally
-		answer.innerHTML += "You are correct! The answer was " + questions[pos][5];
-		correct++;
-	}
-	else
-		answer.innerHTML += "Sorry! The answer was " + questions[pos][5];
+		// checks to see if choice (what user selected) matches the answer (last item in the questions array)
+		if (choice == questions[pos][5]) {
+			// adds one to the correct answer tally
+			$("#test").empty();
+			answer.innerHTML += "You are correct! The answer was " + questions[pos][5];
+			correct++;
+		}
+		else
+			$("#test").empty();
+			answer.innerHTML += "Sorry! The answer was " + questions[pos][5];
 
-	// increment the position of what question they are on
-	pos++;
+		// increment the position of what question they are on
+		pos++;
 
-	// renders next question
-	renderQuestion();
+	}, 2000);
+
+		// renders next question
+		if (pos >= questions.length){
+			document.getElementById("testFinal").innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+			document.getElementById("test_status").innerHTML = "Test Completed";
+			pos = 0;
+			correct = 0;
+		}
+
+		else
+			count = 15;
+			renderQuestion();
+			$("#answer").empty();
 }
 
 // // runs the function "renderQuestion" after page loads
