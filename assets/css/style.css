@@ -1,32 +1,52 @@
 body {
 	background-color: #fe001a;
-	color: white;
 }
 
-h1, h2, h4 {
-	color: white;
+#header img {
+	padding: 20px 0px 0px 40px;
 }
 
-h3 {
+.col-md-3 h1 {
+	margin: 50px 0px 0px -30px;
+	font-size: 50pt;
+}
+
+h1, h2, h3 {
+	color: white;
+	margin: 0px 0px 0px 30px;
+}
+
+#bottle img {
+	position: relative;
+	float: left;
+	width: 800px;
+	height: 350px;
+	margin: -20px 0px 0px -150px;
+}
+
+h4 {
+	position: relative;
 	color: black;
+	font-size: 15pt;
 }
 
 #test {
 	color: black;
+	font-size: 10pt;
+	margin: -265px 0px 0px -40px;
 }
 
-#answer {
+#timer {
 	color: black;
+	font-size: 30px;
+	font-weight: bold;
+	margin: -190px 0px 0px 460px;
 }
 
-.container img {
-	float: absolute;
-	width: 800px;
-	height: 350px;
-	margin: -60px 0px 0px -450px;
-}
-
-.col-lg-4 {
-	float: left;
-	margin: 0px 0px 0px 40px;
+#resultP {
+	position: relative;
+	float: none;
+	color: black;
+	font-size: 20pt;
+	margin: -190px 0px 0px -20px;
 }

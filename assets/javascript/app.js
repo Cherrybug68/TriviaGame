@@ -17,7 +17,7 @@ var questions = [
 	["How many artistic creations did Norman Rockwell paint for Coca-Cola's advertising?", "6", "7", "8", "9", "A"],
 	["How much did Asa Griggs Candler pay for the rights to make Coca-Cola in 1888?", "1,000", "1,750", "2,300", "2,500", "C"],
 	["In what year, did Coca-Cola make it's biggest marketing blunder with the introduction of 'New Coke'?", "1984", "1985", "1986", "1987", "B"],
-	["Where was the iconic 1970 I'd Like to Teach the World to Sing commercial filmed?", "Madera, California", "Inverness, Scottland", "London, England", "Rome, Italy", "B"],
+	["Where was the iconic 1970 I'd Like to Teach the World to Sing commercial filmed?", "Madera, California", "Inverness, Scottland", "London, England", "Rome, Italy", "D"],
 ];
 
 var count = 15;
@@ -40,6 +40,7 @@ function renderTimer (){
 
 // Writes the questions and multiple choice answers to the screen
 function renderQuestion() {
+	$("#resultP").text("")
 	renderTimer();
 
 	test = document.getElementById("test");
@@ -55,13 +56,13 @@ function renderQuestion() {
 
 
 	// writes question to the screen
-	test.innerHTML = "<h3>"+question+"</h3>";
+	test.innerHTML = "<h4>"+question+"<br></h4>";
 
 	// writes answers to the screen with radio buttons. Need to use += so that it will append to the data that was started on the line above
-	test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
-	test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
-	test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br>";
-	test.innerHTML += "<input type='radio' name='choices' value='D'> "+chD+"<br>";
+	test.innerHTML += "<input class='choices' type='radio' name='choices' value='A'> "+chA+"<br>";
+	test.innerHTML += "<input class='choices' type='radio' name='choices' value='B'> "+chB+"<br>";
+	test.innerHTML += "<input class='choices' type='radio' name='choices' value='C'> "+chC+"<br>";
+	test.innerHTML += "<input class='choices' type='radio' name='choices' value='D'> "+chD+"<br><br>";
 
 	// creates a "Submit Answer" button. and runs a function that will check the answer when the button is clicked
 	test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
@@ -77,30 +78,25 @@ function checkAnswer(){
 
 	clearInterval(counter);
 	
-	setTimeout(function(){
 		// captures the choice (what user selects) selected from the choices (the array of the possible answers)
-		choices = document.getElementsByName("choices");
-		for (var i=0; i<choices.length; i++){
-			if(choices[i].checked){
-			choice = choices[i].value;
-			}
-		}
+		/*choices = document.getElementsByName("choices");*/
+		choice = $("input[name=choices]:checked").val()
+		console.log(choice)
+
 
 		// checks to see if choice (what user selected) matches the answer (last item in the questions array)
 		if (choice == questions[pos][5]) {
 			// adds one to the correct answer tally
 			$("#test").empty();
-			answer.innerHTML += "You are correct! The answer was " + questions[pos][5];
+			$("#resultP").text("You are correct! The answer was " + questions[pos][5])
 			correct++;
-		}
-		else
+		}  else {
 			$("#test").empty();
-			answer.innerHTML += "Sorry! The answer was " + questions[pos][5];
-
+			$("#resultP").text("Sorry! The answer was " + questions[pos][5]);
+		}
 		// increment the position of what question they are on
 		pos++;
 
-	}, 2000);
 
 		// renders next question
 		if (pos >= questions.length){
@@ -108,12 +104,10 @@ function checkAnswer(){
 			document.getElementById("test_status").innerHTML = "Test Completed";
 			pos = 0;
 			correct = 0;
-		}
-
-		else
+		}	else {
 			count = 15;
-			renderQuestion();
-			$("#answer").empty();
+			setTimeout(renderQuestion, 2000)
+		}
 }
 
 // // runs the function "renderQuestion" after page loads
